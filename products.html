@@ -5,7 +5,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Products – Ocean Agri</title>
   <meta name="description" content="Explore Ocean Agri's full product range — mulching paper, crop covers, netlon, weed mats, low tunnel, agri wire, crop support nets and spray pumps." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Products Page Extra Styles ── */
+
+    .products-grid-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+    @media (max-width: 900px) { .products-grid-2col { grid-template-columns: 1fr; } }
+
+    .product-card-v2 {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 32px rgba(46,125,50,0.10);
+      border: 1.5px solid var(--gray-light);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card-v2:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 56px rgba(46,125,50,0.18);
+      border-color: #a5d6a7;
+    }
+
+    .pcv2-img {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .pcv2-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .product-card-v2:hover .pcv2-img img { transform: scale(1.07); }
+
+    .pcv2-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--green); color: #fff;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      padding: 4px 14px; border-radius: 50px;
+      text-transform: uppercase;
+    }
+    .pcv2-badge.new { background: var(--blue); }
+
+    .pcv2-body { padding: 28px 28px 14px; }
+    .pcv2-body h3 { font-size: 22px; margin-bottom: 8px; color: var(--dark); }
+    .pcv2-body > p { font-size: 14px; color: var(--gray); margin-bottom: 18px; line-height: 1.7; }
+
+    .pcv2-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+    .pcv2-tags span {
+      background: var(--off-white);
+      border: 1px solid var(--gray-light);
+      font-size: 11.5px; font-weight: 600;
+      padding: 4px 13px; border-radius: 50px;
+      color: var(--text);
+    }
+
+    .pcv2-tabs {
+      display: flex;
+      border: 1.5px solid var(--gray-light);
+      border-radius: 10px; overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .pcv2-tab-btn {
+      flex: 1; padding: 9px 0;
+      font-size: 12.5px; font-weight: 700;
+      background: var(--off-white); color: var(--gray);
+      border: none; cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.4px;
+    }
+    .pcv2-tab-btn.active { background: var(--green); color: #fff; }
+    .pcv2-tab-btn:first-child { border-right: 1.5px solid var(--gray-light); }
+
+    .pcv2-panel { display: none; }
+    .pcv2-panel.active { display: block; }
+
+    .specs-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .specs-table tr { border-bottom: 1px solid var(--gray-light); }
+    .specs-table tr:last-child { border-bottom: none; }
+    .specs-table td { padding: 8px 4px; color: var(--text); vertical-align: top; }
+    .specs-table td:first-child {
+      font-weight: 700; color: var(--dark);
+      width: 38%; padding-right: 10px;
+    }
+    .specs-table td:last-child { color: var(--gray); }
+
+    .benefits-list { display: flex; flex-direction: column; gap: 8px; padding: 0; margin: 0; list-style: none; }
+    .benefits-list li {
+      display: flex; align-items: flex-start; gap: 9px;
+      font-size: 13px; color: var(--text); line-height: 1.55;
+    }
+    .benefits-list li .bi { color: var(--green); flex-shrink: 0; margin-top: 1px; font-style: normal; }
+
+    .sub-product {
+      background: var(--off-white);
+      border: 1px solid var(--gray-light);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .sub-product h5 {
+      font-size: 13.5px; font-weight: 700;
+      color: var(--dark); margin-bottom: 8px;
+    }
+
+    .pcv2-footer {
+      padding: 16px 28px 24px;
+      border-top: 1.5px solid var(--gray-light);
+      margin-top: auto;
+    }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--green-light);
+      margin-bottom: 10px;
+    }
+    .section-label::before, .section-label::after {
+      content: ''; width: 24px; height: 2px;
+      background: var(--green-light); border-radius: 2px;
+    }
+
+    .filter-sticky {
+      position: sticky; top: 68px; z-index: 90;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-light);
+      padding: 14px 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    .card-full { grid-column: 1 / -1; }
+    .card-full .pcv2-img { height: 100%; min-height: 260px; border-radius: 0; }
+
+    /* ── Spray pump card row layout ── */
+    .pump-row {
+      display: flex;
+      flex-direction: row;
+    }
+    .pump-row .pump-img-col {
+      flex: 0 0 33.333%;
+      max-width: 33.333%;
+    }
+    .pump-row .pump-body-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    @media (max-width: 768px) {
+      .pump-row { flex-direction: column; }
+      .pump-row .pump-img-col { flex: none; max-width: 100%; }
+    }
+
+    /* ── Sub-products row inside spray pump ── */
+    .sub-products-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .sub-products-row .sub-product {
+      flex: 1;
+      margin-bottom: 0;
+    }
+    @media (max-width: 600px) {
+      .sub-products-row { flex-direction: column; }
+    }
+
+    /* ── Text center utility ── */
+    .text-center { text-align: center; }
+    .mb-3 { margin-bottom: 12px; }
+    .mb-5 { margin-bottom: 48px; }
+    .mt-3 { margin-top: 12px; }
+    .w-100 { width: 100%; }
+    .justify-content-center { justify-content: center; }
+    .flex-grow-1 { flex-grow: 1; }
+  </style>
 </head>
 <body>
 
@@ -31,18 +212,18 @@
       <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
       <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
       <li class="nav-item">
-        <a class="nav-link active" href="products.html">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></a>
+        <a class="nav-link" href="products.html">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></a>
         <div class="dropdown">
-          <a href="#mulching">Mulching Paper</a>
-          <a href="#crop-cover">Crop Cover</a>
-          <a href="#netlon">Netlon Cover</a>
-          <a href="#weed-mat">Weed Mat</a>
-          <a href="#low-tunnel">Low Tunnel Products</a>
-          <a href="#support">Crop Support & Wire</a>
-          <a href="#spray-pump">Spray Pumps</a>
+          <a href="products.html#mulching">Mulching Paper</a>
+          <a href="products.html#crop-cover">Crop Cover</a>
+          <a href="products.html#netlon">Netlon Cover</a>
+          <a href="products.html#weed-mat">Weed Mat</a>
+          <a href="products.html#low-tunnel">Low Tunnel Products</a>
+          <a href="products.html#support">Crop Support & Wire</a>
+          <a href="products.html#spray-pump">Spray Pumps</a>
         </div>
       </li>
-      <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+      <li class="nav-item"><a class="nav-link " href="contact.html">Contact Us</a></li>
     </ul>
     <a class="btn btn-primary nav-cta" href="contact.html">Get Free Quote</a>
     <button class="hamburger"><span></span><span></span><span></span></button>
@@ -61,239 +242,479 @@
 <div class="page-header">
   <div class="container">
     <h1>Our Products</h1>
-    <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> <span>Products</span></div>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Products</span>
+    </div>
   </div>
 </div>
 
-<!-- FILTER TABS -->
-<section class="section-sm">
-  <div class="container">
-    <div class="filter-tabs">
+<!-- FILTER TABS (sticky) -->
+<div class="filter-sticky">
+  <div class="container" style="margin-top: 20px;">
+    <div class="filter-tabs mb-0">
       <button class="filter-tab active" data-cat="all">All Products</button>
       <button class="filter-tab" data-cat="mulching">Mulching Paper</button>
       <button class="filter-tab" data-cat="cover">Crop Covers</button>
       <button class="filter-tab" data-cat="netlon">Netlon</button>
       <button class="filter-tab" data-cat="weed">Weed Mat</button>
-      <button class="filter-tab" data-cat="support">Support & Wire</button>
+      <button class="filter-tab" data-cat="tunnel">Low Tunnel</button>
+      <button class="filter-tab" data-cat="support">Support &amp; Wire</button>
       <button class="filter-tab" data-cat="pump">Spray Pump</button>
     </div>
+  </div>
+</div>
 
-    <div class="products-grid">
+<!-- PRODUCTS SECTION -->
+<section class="section-sm" style="background:var(--off-white);">
+  <div class="container">
 
-      <!-- MULCHING -->
-      <div class="product-card" id="mulching" data-cat="mulching" data-animate>
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800&q=80" alt="Mulching Paper" loading="lazy" />
-          <span class="product-card-badge">Best Seller</span>
-        </div>
-        <div class="product-card-body">
-          <h3>Mulching Paper</h3>
-          <p>Controls weeds, retains moisture and regulates soil temperature. Available in crop-specific variants for maximum effectiveness.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Types:</strong>
-            <div class="product-card-tags"><span>Silver Black</span><span>White Black</span><span>Black Black</span><span>Red Black</span><span>Green Black</span></div>
-          </div>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Crop Variants:</strong>
-            <div class="product-card-tags"><span>🍅 Tomato Care</span><span>🍈 Melon Care</span><span>🌶 Chilly Care</span><span>🍆 Brinjal Care</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ Reduces moisture loss by up to 40%</li>
-            <li>✅ Suppresses weed growth effectively</li>
-            <li>✅ Regulates soil temperature for better root growth</li>
-            <li>✅ Increases overall crop yield</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
-      <!-- CROP COVER -->
-      <div class="product-card" id="crop-cover" data-cat="cover" data-animate data-delay="1">
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=800&q=80" alt="Crop Cover" loading="lazy" />
-        </div>
-        <div class="product-card-body">
-          <h3>Crop Cover</h3>
-          <p>Versatile non-woven and perforated covers providing UV protection, insect barrier and optimal airflow for every stage of crop growth.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Types:</strong>
-            <div class="product-card-tags"><span>Crop Protection Cover</span><span>Fruit Protection Pouch</span><span>Banana Bunch Cover</span><span>Banana Plant Cover</span><span>Papaya Tree Cover</span><span>Nursery Plant Cover</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ UV protection for delicate crops</li>
-            <li>✅ Physical insect and pest barrier</li>
-            <li>✅ Good airflow prevents moisture buildup</li>
-            <li>✅ Available in multiple sizes</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
-      <!-- NETLON -->
-      <div class="product-card" id="netlon" data-cat="netlon" data-animate data-delay="2">
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80" alt="Netlon Cover" loading="lazy" />
-        </div>
-        <div class="product-card-body">
-          <h3>Netlon Cover</h3>
-          <p>UV-stabilized woven mesh nets for bird protection and pest management across a wide range of vegetable and fruit crops.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Applications:</strong>
-            <div class="product-card-tags"><span>Tomato</span><span>Chilli</span><span>Capsicum</span><span>Watermelon</span><span>Cucumber</span><span>Grapes</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ Effective bird and large pest barrier</li>
-            <li>✅ UV stabilized for long-term use</li>
-            <li>✅ Allows sunlight and air through</li>
-            <li>✅ Lightweight and easy to install</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
-      <!-- WEED MAT -->
-      <div class="product-card" id="weed-mat" data-cat="weed" data-animate>
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=800&q=80" alt="Weed Mat" loading="lazy" />
-        </div>
-        <div class="product-card-body">
-          <h3>Weed Mat</h3>
-          <p>Heavy-duty woven polypropylene mats that block weed growth while maintaining soil health, water permeability and temperature regulation.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Variants:</strong>
-            <div class="product-card-tags"><span>⬛ Black</span><span>⬜ White</span><span>🟩 Green</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ Eliminates manual weeding effort</li>
-            <li>✅ Protects soil structure</li>
-            <li>✅ Water permeable — allows irrigation through</li>
-            <li>✅ Long-lasting, multi-season use</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
-      <!-- LOW TUNNEL -->
-      <div class="product-card" id="low-tunnel" data-cat="cover" data-animate data-delay="1">
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?w=800&q=80" alt="Low Tunnel Products" loading="lazy" />
-        </div>
-        <div class="product-card-body">
-          <h3>Low Tunnel Products</h3>
-          <p>Complete low tunnel system for protecting young seedlings and early-stage crops from cold, wind, insects and rain splash.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Components:</strong>
-            <div class="product-card-tags"><span>Fiber Stick</span><span>Tunnel Clip</span><span>Thread / Twine</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ Easy DIY tunnel assembly</li>
-            <li>✅ Flexible, durable fiber sticks</li>
-            <li>✅ Reusable across seasons</li>
-            <li>✅ Compatible with all crop covers</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
-      <!-- TOMATO THREAD -->
-      <div class="product-card" data-cat="support" data-animate data-delay="2">
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80" alt="Tomato Thread" loading="lazy" />
-        </div>
-        <div class="product-card-body">
-          <h3>Tomato Thread</h3>
-          <p>High-strength, weather-resistant support thread specifically designed for training and supporting tomato and other vine crops.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Features:</strong>
-            <div class="product-card-tags"><span>High Tensile Strength</span><span>UV Resistant</span><span>Weather Resistant</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ Supports heavy fruit loads</li>
-            <li>✅ Resists moisture and UV degradation</li>
-            <li>✅ Suitable for open field and greenhouse</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
-      <!-- AGRI WIRE -->
-      <div class="product-card" id="support" data-cat="support" data-animate>
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=800&q=80" alt="Agri Wire" loading="lazy" />
-        </div>
-        <div class="product-card-body">
-          <h3>Agri Wire</h3>
-          <p>Durable, anti-corrosion galvanized wire for crop training, trellis construction and structural support in farms and greenhouses.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Features:</strong>
-            <div class="product-card-tags"><span>Galvanized</span><span>Anti-Corrosion</span><span>High Tensile</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ Long service life — rust resistant</li>
-            <li>✅ Multiple gauge options available</li>
-            <li>✅ Ideal for banana, grape, papaya trellising</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
-      <!-- CROP SUPPORT NET -->
-      <div class="product-card" data-cat="support" data-animate data-delay="1">
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?w=800&q=80" alt="Crop Support Net" loading="lazy" />
-        </div>
-        <div class="product-card-body">
-          <h3>Crop Support Net</h3>
-          <p>Sturdy trellis nets designed to support climbing and vining crops, preventing stem damage and keeping fruits off the ground.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Suitable For:</strong>
-            <div class="product-card-tags"><span>Cucumber</span><span>Bitter Gourd</span><span>Beans</span><span>Tomato</span><span>Peas</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ Improves air circulation around plants</li>
-            <li>✅ Reduces disease incidence</li>
-            <li>✅ Easier harvesting and management</li>
-            <li>✅ UV stabilized for outdoor use</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
-      <!-- SPRAY PUMP -->
-      <div class="product-card" id="spray-pump" data-cat="pump" data-animate data-delay="2">
-        <div class="product-card-img">
-          <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80" alt="Spray Pump" loading="lazy" />
-          <span class="product-card-badge">New</span>
-        </div>
-        <div class="product-card-body">
-          <h3>Spray Pumps</h3>
-          <p>High-performance battery-powered spray pumps for efficient, even application of pesticides, herbicides and liquid fertilizers.</p>
-          <div style="margin-bottom:14px;">
-            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Models:</strong>
-            <div class="product-card-tags"><span>🔋 Double Battery Pump</span><span>⚡ Two-in-One Pump</span></div>
-          </div>
-          <ul style="font-size:13px;color:var(--gray);display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-            <li>✅ High pressure, uniform spray pattern</li>
-            <li>✅ Long battery life per charge</li>
-            <li>✅ Portable and ergonomic design</li>
-            <li>✅ Suitable for all field types</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;">Enquire Now</a>
-        </div>
-      </div>
-
+    <div class="text-center mb-5" data-animate>
+      <div class="section-label">What We Offer</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:36px;color:var(--dark);">Premium Agri-Protection Products</h2>
+      <p style="max-width:560px;margin:12px auto 0;color:var(--gray);font-size:15px;">
+        Trusted by farmers across India — every product engineered for stronger growth, healthier crops and higher yields.
+      </p>
     </div>
+
+    <div class="products-grid-2col" id="productsGrid">
+
+      <!-- 1. MULCHING PAPER -->
+      <div class="product-card-v2" id="mulching" data-cat="mulching" data-animate>
+        <div class="pcv2-img">
+          <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=900&q=80" alt="Mulching Paper" loading="lazy"/>
+          <span class="pcv2-badge">Best Seller</span>
+        </div>
+        <div class="pcv2-body">
+          <h3>Mulching Paper</h3>
+          <p>Controls weeds, retains moisture and regulates soil temperature. Available in crop-specific variants for maximum effectiveness across all field types.</p>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Types:</strong>
+            <div class="pcv2-tags">
+              <span>Silver Black</span><span>White Black</span><span>Black Black</span><span>Red Black</span><span>Green Black</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Crop Variants:</strong>
+            <div class="pcv2-tags">
+              <span>🍅 Tomato Care</span><span>🍈 Melon Care</span><span>🌶 Chilly Care</span><span>🍆 Brinjal Care</span>
+            </div>
+          </div>
+          <div class="pcv2-tabs">
+            <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-mulching')">📋 Specifications</button>
+            <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-mulching')">✅ Key Benefits</button>
+          </div>
+          <div id="sp-mulching" class="pcv2-panel active">
+            <table class="specs-table">
+              <tr><td>Width</td><td>2.5 ft, 3 ft, 1 m, 1.2 m — up to 8 ft</td></tr>
+              <tr><td>Length</td><td>400 m, 800 m &amp; Customised</td></tr>
+              <tr><td>Colors</td><td>Silver/Black, White/Black, Black/Black, Red/Black, Green/Black</td></tr>
+            </table>
+          </div>
+          <div id="bn-mulching" class="pcv2-panel">
+            <ul class="benefits-list">
+              <li><i class="bi">✅</i><span><strong>Faster &amp; Healthier Root Growth</strong> — Blocks light, promoting deeper, stronger white roots</span></li>
+              <li><i class="bi">✅</i><span><strong>Prevents Moisture Loss</strong> — Reduces evaporation, saving water &amp; irrigation costs</span></li>
+              <li><i class="bi">✅</i><span><strong>Protects from Harmful Sun Rays</strong> — Blocks UV &amp; IR radiation, preventing root damage</span></li>
+              <li><i class="bi">✅</i><span><strong>Maintains Ideal Soil Temperature</strong> — Prevents overheating in summer &amp; cold stress in winter</span></li>
+              <li><i class="bi">✅</i><span><strong>Prevents Soil Erosion &amp; Weeds</strong> — Blocks sunlight, reducing weed growth and soil loss</span></li>
+              <li><i class="bi">✅</i><span><strong>Increases Crop Yield</strong> — Enhances plant health, leading to 20–30% higher productivity</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcv2-footer">
+          <a href="contact.html" class="btn btn-primary w-100 justify-content-center">Enquire Now</a>
+        </div>
+      </div>
+
+      <!-- 2. CROP COVER -->
+      <div class="product-card-v2" id="crop-cover" data-cat="cover" data-animate data-delay="1">
+        <div class="pcv2-img">
+          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=900&q=80" alt="Crop Cover" loading="lazy"/>
+        </div>
+        <div class="pcv2-body">
+          <h3>Ocean Crop Cover</h3>
+          <p>UV-treated non-woven crop covers providing sunburn protection, insect barriers and an ideal microclimate at every stage of crop growth.</p>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Types:</strong>
+            <div class="pcv2-tags">
+              <span>Crop Protection Cover</span><span>Fruit Protection Pouch</span><span>Banana Bunch Cover</span><span>Banana Plant Cover</span><span>Papaya Tree Cover</span><span>Nursery Plant Cover</span>
+            </div>
+          </div>
+          <div class="pcv2-tabs">
+            <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-cover')">📋 Specifications</button>
+            <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-cover')">✅ Key Benefits</button>
+          </div>
+          <div id="sp-cover" class="pcv2-panel active">
+            <table class="specs-table">
+              <tr><td>Width</td><td>5.25 ft, 10.5 ft</td></tr>
+              <tr><td>Length</td><td>400 m, 800 m &amp; Customised</td></tr>
+              <tr><td>Material</td><td>UV-treated non-woven fabric</td></tr>
+              <tr><td>Varieties</td><td>6 cover types for different crops</td></tr>
+            </table>
+          </div>
+          <div id="bn-cover" class="pcv2-panel">
+            <ul class="benefits-list">
+              <li><i class="bi">✅</i><span><strong>UV Treated &amp; Prevents Sunburn</strong> — Shields crops from excessive sunlight &amp; heat stress</span></li>
+              <li><i class="bi">✅</i><span><strong>Maintains Required Temperature</strong> — Regulates soil temperature for optimal plant growth in all seasons</span></li>
+              <li><i class="bi">✅</i><span><strong>Insect Repellent</strong> — Acts as physical barrier, reducing need for chemical pesticides</span></li>
+              <li><i class="bi">✅</i><span><strong>Protects from Harmful Radiations</strong> — Blocks UV and IR rays for healthy growth</span></li>
+              <li><i class="bi">✅</i><span><strong>Helps Plants Breathe</strong> — Allows proper air circulation, preventing fungal growth</span></li>
+              <li><i class="bi">✅</i><span><strong>Better Greenhouse Effect</strong> — Traps warmth to create an ideal microclimate</span></li>
+              <li><i class="bi">✅</i><span><strong>Tear-Resistant &amp; Durable</strong> — Long-lasting performance even in harsh weather</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcv2-footer">
+          <a href="contact.html" class="btn btn-primary w-100 justify-content-center">Enquire Now</a>
+        </div>
+      </div>
+
+      <!-- 3. NETLON COVER -->
+      <div class="product-card-v2" id="netlon" data-cat="netlon" data-animate>
+        <div class="pcv2-img">
+          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=80" alt="Netlon Cover" loading="lazy"/>
+        </div>
+        <div class="pcv2-body">
+          <h3>Ocean Netlon Cover</h3>
+          <p>UV-stabilised high-grade polymer mesh nets offering robust bird &amp; insect protection while maintaining airflow and sunlight for healthy crop development.</p>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Applications:</strong>
+            <div class="pcv2-tags">
+              <span>Tomato</span><span>Green/Red Chili</span><span>Capsicum</span><span>Muskmelon</span><span>Watermelon</span><span>Pomegranate</span><span>Orange</span><span>Dragon Fruit</span>
+            </div>
+          </div>
+          <div class="pcv2-tabs">
+            <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-netlon')">📋 Specifications</button>
+            <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-netlon')">✅ Key Benefits</button>
+          </div>
+          <div id="sp-netlon" class="pcv2-panel active">
+            <table class="specs-table">
+              <tr><td>Width</td><td>6, 8, 10.5, 11, 13 &amp; 15 ft</td></tr>
+              <tr><td>Length</td><td>200 metres</td></tr>
+              <tr><td>Thickness</td><td>65, 75 &amp; 85 GSM</td></tr>
+              <tr><td>Material</td><td>UV-stabilised high-grade polymer</td></tr>
+            </table>
+          </div>
+          <div id="bn-netlon" class="pcv2-panel">
+            <ul class="benefits-list">
+              <li><i class="bi">✅</i><span><strong>Protects from Birds &amp; Insects</strong> — Acts as shield preventing damage from pests and birds</span></li>
+              <li><i class="bi">✅</i><span><strong>UV Stabilized</strong> — Long-lasting durability under harsh sunlight</span></li>
+              <li><i class="bi">✅</i><span><strong>Shields from Heavy Rainfall &amp; Wind</strong> — Prevents crop damage from excessive rain and wind</span></li>
+              <li><i class="bi">✅</i><span><strong>Maintains Proper Temperature</strong> — Creates an ideal microclimate for plant growth</span></li>
+              <li><i class="bi">✅</i><span><strong>Ensures Better Airflow</strong> — Reduces humidity and prevents fungal infections</span></li>
+              <li><i class="bi">✅</i><span><strong>Tear-Resistant &amp; Durable</strong> — Withstands extreme weather for long-term agricultural use</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcv2-footer">
+          <a href="contact.html" class="btn btn-primary w-100 justify-content-center">Enquire Now</a>
+        </div>
+      </div>
+
+      <!-- 4. WEED MAT -->
+      <div class="product-card-v2" id="weed-mat" data-cat="weed" data-animate data-delay="1">
+        <div class="pcv2-img">
+          <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=900&q=80" alt="Weed Mat" loading="lazy"/>
+        </div>
+        <div class="pcv2-body">
+          <h3>Weed Mat</h3>
+          <p>Heavy-duty UV-stabilised woven polypropylene mats that eliminate weed growth while maintaining soil health, water permeability and temperature regulation.</p>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Variants:</strong>
+            <div class="pcv2-tags"><span>⬛ Black</span><span>⬜ White</span><span>🟩 Green</span></div>
+          </div>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Applications:</strong>
+            <div class="pcv2-tags">
+              <span>Agricultural Fields</span><span>Nurseries &amp; Gardens</span><span>Orchards</span><span>Vineyards</span><span>Greenhouses</span>
+            </div>
+          </div>
+          <div class="pcv2-tabs">
+            <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-weed')">📋 Specifications</button>
+            <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-weed')">✅ Key Benefits</button>
+          </div>
+          <div id="sp-weed" class="pcv2-panel active">
+            <table class="specs-table">
+              <tr><td>Colors</td><td>Black, White, Green</td></tr>
+              <tr><td>GSM Options</td><td>95 – 120 GSM</td></tr>
+              <tr><td>Width</td><td>2 ft to 14 ft</td></tr>
+              <tr><td>Length</td><td>100 – 500 m (customisable)</td></tr>
+              <tr><td>UV Stabilized</td><td>Yes — designed for harsh sunlight</td></tr>
+            </table>
+          </div>
+          <div id="bn-weed" class="pcv2-panel">
+            <ul class="benefits-list">
+              <li><i class="bi">✅</i><span><strong>Weed-Free Growth</strong> — Prevents weed growth, reducing herbicide use &amp; labour costs</span></li>
+              <li><i class="bi">✅</i><span><strong>Enhanced Water Permeability</strong> — Allows groundwater recharge &amp; prevents soil erosion</span></li>
+              <li><i class="bi">✅</i><span><strong>Healthy Crops</strong> — Eliminates competition, ensuring optimal growth &amp; higher yields</span></li>
+              <li><i class="bi">✅</i><span><strong>Durable and Strong</strong> — High-strength material resists wear for long-lasting performance</span></li>
+              <li><i class="bi">✅</i><span><strong>Breathable Design</strong> — Supports air &amp; water flow for better plant health &amp; root development</span></li>
+              <li><i class="bi">✅</i><span><strong>Prevents Water Logging</strong> — Maintains ideal soil conditions for healthy crop growth</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcv2-footer">
+          <a href="contact.html" class="btn btn-primary w-100 justify-content-center">Enquire Now</a>
+        </div>
+      </div>
+
+      <!-- 5. LOW TUNNEL -->
+      <div class="product-card-v2" id="low-tunnel" data-cat="tunnel" data-animate>
+        <div class="pcv2-img">
+          <img src="https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?w=900&q=80" alt="Low Tunnel Products" loading="lazy"/>
+        </div>
+        <div class="pcv2-body">
+          <h3>Low Tunnel Products</h3>
+          <p>Complete low tunnel system — fiber sticks, tunnel clips and UV-stabilised thread — for protecting young seedlings from cold, wind, insects and rain splash.</p>
+          <div class="sub-product">
+            <h5>🪵 Fiber Stick</h5>
+            <table class="specs-table">
+              <tr><td>Length</td><td>6 ft, 8 ft, 10 ft</td></tr>
+              <tr><td>Thickness</td><td>5 mm</td></tr>
+            </table>
+          </div>
+          <div class="sub-product">
+            <h5>📎 Tunnel Clip</h5>
+            <table class="specs-table">
+              <tr><td>Length</td><td>2 inch</td></tr>
+              <tr><td>Thickness</td><td>2 mm</td></tr>
+            </table>
+          </div>
+          <div class="sub-product">
+            <h5>🧵 Low Tunnel Thread</h5>
+            <table class="specs-table">
+              <tr><td>Length</td><td>1000 m</td></tr>
+              <tr><td>Thickness</td><td>20 D</td></tr>
+            </table>
+          </div>
+          <div class="pcv2-tabs mt-3">
+            <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-tunnel')">📋 Overview</button>
+            <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-tunnel')">✅ Key Benefits</button>
+          </div>
+          <div id="sp-tunnel" class="pcv2-panel active">
+            <table class="specs-table">
+              <tr><td>Components</td><td>Fiber Stick + Tunnel Clip + Thread</td></tr>
+              <tr><td>Stick</td><td>6/8/10 ft — 5 mm thick</td></tr>
+              <tr><td>Clip</td><td>2 inch — 2 mm thick</td></tr>
+              <tr><td>Thread</td><td>1000 m — 20 D — UV stabilised</td></tr>
+            </table>
+          </div>
+          <div id="bn-tunnel" class="pcv2-panel">
+            <ul class="benefits-list">
+              <li><i class="bi">✅</i><span><strong>Long-Lasting &amp; Durable</strong> — Made from high-quality fiber material</span></li>
+              <li><i class="bi">✅</i><span><strong>Rust-Free &amp; Lightweight</strong> — No corrosion, easy to handle and install</span></li>
+              <li><i class="bi">✅</i><span><strong>Highly Flexible Stick</strong> — Better than metal or wooden rods</span></li>
+              <li><i class="bi">✅</i><span><strong>Low-Cost Clip Yet Strong</strong> — Fits perfectly to agri wire for a secure fit</span></li>
+              <li><i class="bi">✅</i><span><strong>Thread UV Stabilized</strong> — Resistant to sun damage for enhanced longevity</span></li>
+              <li><i class="bi">✅</i><span><strong>Reusable Across Seasons</strong> — Compatible with all crop covers</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcv2-footer">
+          <a href="contact.html" class="btn btn-primary w-100 justify-content-center">Enquire Now</a>
+        </div>
+      </div>
+
+      <!-- 6. TOMATO THREAD -->
+      <div class="product-card-v2" id="tomato-thread" data-cat="support" data-animate data-delay="1">
+        <div class="pcv2-img">
+          <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=900&q=80" alt="Tomato Thread" loading="lazy"/>
+        </div>
+        <div class="pcv2-body">
+          <h3>Tomato Thread</h3>
+          <p>High-strength, weather-resistant support thread — a 100% replacement for jute sutli — designed for training and supporting tomato and other vine crops vertically.</p>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Applications:</strong>
+            <div class="pcv2-tags">
+              <span>Tomato</span><span>Green Chili</span><span>Red Chili</span><span>Capsicum</span>
+            </div>
+          </div>
+          <div class="pcv2-tabs">
+            <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-tomthread')">📋 Specifications</button>
+            <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-tomthread')">✅ Key Benefits</button>
+          </div>
+          <div id="sp-tomthread" class="pcv2-panel active">
+            <table class="specs-table">
+              <tr><td>Pack Size</td><td>1 kg</td></tr>
+              <tr><td>Length</td><td>2000 metres per kg</td></tr>
+              <tr><td>Thickness</td><td>4000 D</td></tr>
+              <tr><td>Cut Pieces</td><td>1000 numbers</td></tr>
+            </table>
+          </div>
+          <div id="bn-tomthread" class="pcv2-panel">
+            <ul class="benefits-list">
+              <li><i class="bi">✅</i><span><strong>Facilitates Easy Climbing</strong> — Helps plants grow upright, preventing ground contact &amp; disease risk</span></li>
+              <li><i class="bi">✅</i><span><strong>100% Replacement for Jute Sutli</strong> — More durable, long-lasting and weather-resistant</span></li>
+              <li><i class="bi">✅</i><span><strong>Strong &amp; Long-Lasting Structure</strong> — Ideal for crop covers and support nets</span></li>
+              <li><i class="bi">✅</i><span><strong>Resistant to Fertilizers, Fungicides &amp; Pesticides</strong> — No chemical damage</span></li>
+              <li><i class="bi">✅</i><span><strong>High Strength Netting Structure</strong> — Supports heavy plant loads effectively</span></li>
+              <li><i class="bi">✅</i><span><strong>Weather-Resistant</strong> — Withstands rain, heat and harsh environmental conditions</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcv2-footer">
+          <a href="contact.html" class="btn btn-primary w-100 justify-content-center">Enquire Now</a>
+        </div>
+      </div>
+
+      <!-- 7. AGRI WIRE -->
+      <div class="product-card-v2" id="agri-wire" data-cat="support" data-animate>
+        <div class="pcv2-img">
+          <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=900&q=80" alt="Agri Wire" loading="lazy"/>
+        </div>
+        <div class="pcv2-body">
+          <h3>Agri Wire</h3>
+          <p>Anti-corrosion twisted agri wire — same size and strength as GI steel wire — ideal for trellising, fencing and crop support in farms and greenhouses.</p>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Applications:</strong>
+            <div class="pcv2-tags">
+              <span>Tomato</span><span>Green Chili</span><span>Red Chili</span><span>Capsicum</span><span>Grapes</span>
+            </div>
+          </div>
+          <div class="pcv2-tabs">
+            <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-wire')">📋 Specifications</button>
+            <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-wire')">✅ Key Benefits</button>
+          </div>
+          <div id="sp-wire" class="pcv2-panel active">
+            <table class="specs-table">
+              <tr><td>Twist Options</td><td>3, 6 and 9 twisted</td></tr>
+              <tr><td>Length</td><td>900 m, 1450 m &amp; Customised</td></tr>
+              <tr><td>Thickness</td><td>1.5 mm, 2.5 mm &amp; Customised</td></tr>
+            </table>
+          </div>
+          <div id="bn-wire" class="pcv2-panel">
+            <ul class="benefits-list">
+              <li><i class="bi">✅</i><span><strong>Similar Size as GI Steel Wire</strong> — Perfect alternative with same strength &amp; dimensions</span></li>
+              <li><i class="bi">✅</i><span><strong>Suitable for Various Applications</strong> — Ideal for trellising, fencing and crop support</span></li>
+              <li><i class="bi">✅</i><span><strong>Resistant to Fertilizers, Fungicides &amp; Pesticides</strong> — Ensures longevity without chemical damage</span></li>
+              <li><i class="bi">✅</i><span><strong>Anti-Corrosion</strong> — Outlasts traditional metal wires without rusting</span></li>
+              <li><i class="bi">✅</i><span><strong>Uniform Thickness</strong> — Consistent strength for better crop support</span></li>
+              <li><i class="bi">✅</i><span><strong>Weather-Resistant</strong> — Withstands rain, heat and humidity</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcv2-footer">
+          <a href="contact.html" class="btn btn-primary w-100 justify-content-center">Enquire Now</a>
+        </div>
+      </div>
+
+      <!-- 8. CROP SUPPORT NET -->
+      <div class="product-card-v2" id="crop-net" data-cat="support" data-animate data-delay="1">
+        <div class="pcv2-img">
+          <img src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?w=900&q=80" alt="Crop Support Net" loading="lazy"/>
+        </div>
+        <div class="pcv2-body">
+          <h3>Crop Support Net</h3>
+          <p>UV-stabilised trellis nets designed to support climbing and vining crops, preventing stem damage, reducing disease and keeping fruits off the ground.</p>
+          <div class="mb-3">
+            <strong style="font-size:12px;color:var(--dark);display:block;margin-bottom:8px;">Applications:</strong>
+            <div class="pcv2-tags">
+              <span>Bitter Guard</span><span>Ridge Guard</span><span>Cucumber</span><span>Sponge Guard</span><span>Beans</span><span>Peas</span>
+            </div>
+          </div>
+          <div class="pcv2-tabs">
+            <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-cropnet')">📋 Specifications</button>
+            <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-cropnet')">✅ Key Benefits</button>
+          </div>
+          <div id="sp-cropnet" class="pcv2-panel active">
+            <table class="specs-table">
+              <tr><td>Length</td><td>1250 feet</td></tr>
+              <tr><td>Thickness</td><td>0.46 mm (6 ft width) &amp; Customised</td></tr>
+              <tr><td>Material</td><td>UV-stabilised high-grade polymer</td></tr>
+            </table>
+          </div>
+          <div id="bn-cropnet" class="pcv2-panel">
+            <ul class="benefits-list">
+              <li><i class="bi">✅</i><span><strong>UV Stabilized</strong> — Protects against sun damage for extended durability</span></li>
+              <li><i class="bi">✅</i><span><strong>Made from High-Grade Material</strong> — Superior strength and longevity</span></li>
+              <li><i class="bi">✅</i><span><strong>Easy to Install &amp; Apply</strong> — Lightweight and hassle-free setup</span></li>
+              <li><i class="bi">✅</i><span><strong>Long-Lasting</strong> — Designed for multiple seasons of use</span></li>
+              <li><i class="bi">✅</i><span><strong>Better Support for Climbing Crops</strong> — Helps plants grow upright, preventing ground contact</span></li>
+              <li><i class="bi">✅</i><span><strong>Increases Crop Yield</strong> — Enhances plant health, leading to higher productivity</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pcv2-footer">
+          <a href="contact.html" class="btn btn-primary w-100 justify-content-center">Enquire Now</a>
+        </div>
+      </div>
+
+      <!-- 9. SPRAY PUMP — full width -->
+      <div class="product-card-v2 card-full" id="spray-pump" data-cat="pump" data-animate>
+        <div class="pump-row">
+          <div class="pump-img-col">
+            <div class="pcv2-img" style="height:100%; min-height:280px; border-radius:0;">
+              <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=900&q=80" alt="Spray Pump" loading="lazy" style="border-radius:0; height:100%;"/>
+              <span class="pcv2-badge new">New</span>
+            </div>
+          </div>
+          <div class="pump-body-col">
+            <div class="pcv2-body flex-grow-1">
+              <h3>Spray Pumps</h3>
+              <p>High-performance battery-powered spray pumps for efficient, uniform application of pesticides, herbicides and liquid fertilizers across all field types and crop sizes.</p>
+              <div class="sub-products-row">
+                <div class="sub-product">
+                  <h5>🔋 Double Battery Spray Pump</h5>
+                  <table class="specs-table">
+                    <tr><td>Tank</td><td>20 litres</td></tr>
+                    <tr><td>Motor</td><td>Double motor — up to 200 PSI</td></tr>
+                    <tr><td>Battery</td><td>12V 12AH</td></tr>
+                    <tr><td>Weight</td><td>3 kg (adj. belt &amp; back support)</td></tr>
+                    <tr><td>Includes</td><td>Trigger, lance, high-pressure gun</td></tr>
+                  </table>
+                </div>
+                <div class="sub-product">
+                  <h5>⚡ Two-in-One Spray Pump</h5>
+                  <table class="specs-table">
+                    <tr><td>Tank</td><td>16 litres</td></tr>
+                    <tr><td>Motor</td><td>4.5 LPM — 110 PSI</td></tr>
+                    <tr><td>Battery</td><td>12V 8AH or 12V 12AH</td></tr>
+                    <tr><td>Weight</td><td>2.1 kg (with adjustable belt)</td></tr>
+                    <tr><td>Includes</td><td>Trigger, lance, charger</td></tr>
+                  </table>
+                </div>
+              </div>
+              <div class="pcv2-tabs">
+                <button class="pcv2-tab-btn active" onclick="switchTab(this,'sp-pump')">📋 Applications</button>
+                <button class="pcv2-tab-btn" onclick="switchTab(this,'bn-pump')">✅ Key Benefits</button>
+              </div>
+              <div id="sp-pump" class="pcv2-panel active">
+                <ul class="benefits-list">
+                  <li><i class="bi">✔</i><span>Agricultural &amp; Horticultural Use — farms, gardens, nurseries &amp; orchards for pesticides, herbicides &amp; fertilizers</span></li>
+                  <li><i class="bi">✔</i><span>Heavy-Duty Tasks — Double Battery model perfect for large-scale farming and demanding spraying jobs</span></li>
+                </ul>
+              </div>
+              <div id="bn-pump" class="pcv2-panel">
+                <ul class="benefits-list">
+                  <li><i class="bi">✅</i><span><strong>High Performance</strong> — Double Battery delivers up to 200 PSI for efficient spraying coverage</span></li>
+                  <li><i class="bi">✅</i><span><strong>Extended Battery Life</strong> — Both models offer long-lasting usage with 12V 12AH battery option</span></li>
+                  <li><i class="bi">✅</i><span><strong>Lightweight &amp; Comfortable</strong> — Adjustable belt and back support for easy all-day handling</span></li>
+                  <li><i class="bi">✅</i><span><strong>Durable &amp; Aesthetic</strong> — Glossy finish for enhanced durability and appeal</span></li>
+                  <li><i class="bi">✅</i><span><strong>Versatile &amp; Portable</strong> — Two-in-One model lightweight and easy to carry for all field types</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="pcv2-footer">
+              <a href="contact.html" class="btn btn-primary" style="min-width:220px; justify-content:center;">Enquire Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /productsGrid -->
   </div>
 </section>
 
-<!-- CTA -->
+<!-- CTA BAND -->
 <div class="cta-band" data-animate>
   <div class="container">
     <h2>Not Sure Which Product Is Right for You?</h2>
     <p>Our agri experts will recommend the best product for your specific crop and growing area.</p>
     <div class="cta-band-actions">
       <a href="contact.html" class="btn btn-outline">Get Expert Advice</a>
-      <a href="tel:+919876543210" class="btn" style="background:var(--accent);color:#333;border-color:var(--accent);">📞 Call +91 98765 43210</a>
+      <a href="tel:+917263807575" class="btn" style="background:var(--accent);color:#333;border-color:var(--accent);">📞 Call +91 72638 07575</a>
     </div>
   </div>
 </div>
@@ -305,27 +726,61 @@
       <div class="footer-brand">
         <div class="name">Ocean Agri</div>
         <div class="tagline">Planting Health, Growing Happiness</div>
-        <p>Premium agricultural protection products for farmers, dealers and agri businesses across India.</p>
+        <p>Premium agricultural protection products for farmers, dealers and agri businesses across India. Head Office: Surat | Branch: Pune.</p>
         <div class="footer-social">
           <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
           <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         </div>
       </div>
-      <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="products.html">Products</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
-      <div class="footer-col"><h4>Products</h4><ul><li><a href="#mulching">Mulching Paper</a></li><li><a href="#crop-cover">Crop Cover</a></li><li><a href="#netlon">Netlon Cover</a></li><li><a href="#weed-mat">Weed Mat</a></li><li><a href="#spray-pump">Spray Pumps</a></li></ul></div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#mulching">Mulching Paper</a></li>
+          <li><a href="#crop-cover">Crop Cover</a></li>
+          <li><a href="#netlon">Netlon Cover</a></li>
+          <li><a href="#weed-mat">Weed Mat</a></li>
+          <li><a href="#low-tunnel">Low Tunnel</a></li>
+          <li><a href="#agri-wire">Agri Wire</a></li>
+          <li><a href="#spray-pump">Spray Pumps</a></li>
+        </ul>
+      </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:+919876543210">+91 98765 43210</a></div>
-        <div class="contact-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><a href="mailto:info@oceanagri.in">info@oceanagri.in</a></div>
+        <div class="contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          <a href="tel:+917263807575">+91 72638 07575</a>
+        </div>
+        <div class="contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <a href="mailto:creationsshreesagar@gmail.com">creationsshreesagar@gmail.com</a>
+        </div>
+        <p style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:10px;">
+          HO: B 304, Nilkanth Heights, Parvat Patia, Surat – 395010<br/>
+          Branch: 141, VTP Trade Park, Undri, Pune – 411060
+        </p>
       </div>
     </div>
   </div>
-  <div class="footer-bottom"><div class="container">© 2025 Ocean Agri. All rights reserved.</div></div>
+  <div class="footer-bottom">
+    <div class="container">© 2025 Ocean Agri. All rights reserved.</div>
+  </div>
 </footer>
 
 <!-- CHATBOT -->
 <div class="chatbot-fab">
-  <button class="chatbot-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg><span class="chatbot-pulse"></span></button>
+  <button class="chatbot-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+    <span class="chatbot-pulse"></span>
+  </button>
 </div>
 <div class="chatbot-window">
   <div class="chatbot-head">
@@ -334,15 +789,79 @@
     <button class="chatbot-close">✕</button>
   </div>
   <div class="chatbot-messages"></div>
-  <div class="chatbot-quick-btns"><button class="quick-btn">Tomato</button><button class="quick-btn">Banana</button><button class="quick-btn">Spray Pump</button><button class="quick-btn">Find Dealer</button></div>
+  <div class="chatbot-quick-btns">
+    <button class="quick-btn">Tomato</button>
+    <button class="quick-btn">Banana</button>
+    <button class="quick-btn">Spray Pump</button>
+    <button class="quick-btn">Find Dealer</button>
+  </div>
   <div class="chatbot-input-row">
-    <input id="chatInput" type="text" placeholder="Type your crop or question…" autocomplete="off" />
+    <input id="chatInput" type="text" placeholder="Type your crop or question…" autocomplete="off"/>
     <button class="chatbot-send"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></button>
   </div>
 </div>
-<div class="whatsapp-float"><a href="https://wa.me/919876543210" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.117 1.535 5.845L.057 23.486a.5.5 0 00.614.612l5.788-1.517A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.649-.518-5.163-1.418l-.371-.22-3.835 1.006 1.021-3.726-.242-.386A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a></div>
+
+<div class="whatsapp-float">
+  <a href="https://wa.me/917263807575" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.117 1.535 5.845L.057 23.486a.5.5 0 00.614.612l5.788-1.517A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.649-.518-5.163-1.418l-.371-.22-3.835 1.006 1.021-3.726-.242-.386A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+  </a>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="main.js"></script>
+<script>
+  /* ── Tab switcher ── */
+  function switchTab(btn, panelId) {
+    const card = btn.closest('.product-card-v2');
+    card.querySelectorAll('.pcv2-tab-btn').forEach(b => b.classList.remove('active'));
+    card.querySelectorAll('.pcv2-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+  }
+
+  /* ── Filter tabs ── */
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      const cat = this.dataset.cat;
+      let visibleCount = 0;
+      document.querySelectorAll('#productsGrid .product-card-v2').forEach(card => {
+        const show = cat === 'all' || card.dataset.cat === cat;
+        card.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+      const pump = document.getElementById('spray-pump');
+      if (pump && pump.style.display !== 'none') {
+        pump.style.gridColumn = (visibleCount > 1) ? '1 / -1' : '';
+      }
+    });
+  });
+
+  /* ── Scroll animations ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('animated'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+  /* ── Navbar scroll ── */
+  window.addEventListener('scroll', () => {
+    document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+
+  const kb = {
+    tomato:       'For tomatoes, we recommend <strong>Tomato Care Mulching Paper</strong>, <strong>Tomato Thread</strong>, <strong>Agri Wire</strong> and <strong>Netlon Cover</strong>. Together they can boost yield by 20–30%!',
+    banana:       'For banana crops, try our <strong>Banana Bunch Cover</strong> and <strong>Banana Plant Cover</strong> from the Crop Cover range, plus <strong>Agri Wire</strong> for support.',
+    'spray pump': 'We offer two models: <strong>Double Battery</strong> (20L, 200 PSI) for large farms and the lighter <strong>Two-in-One</strong> (16L, 110 PSI) for versatile everyday use.',
+    'find dealer':'Reach us at <strong>+91 72638 07575</strong> or email <strong>creationsshreesagar@gmail.com</strong>. Branch in Pune: 141, VTP Trade Park, Undri.',
+    mulching:     'Mulching Paper comes in Silver/White/Black/Red/Green × Black — widths 2.5 ft up to 8 ft, lengths 400 m or 800 m (customisable).',
+    weed:         'Weed Mat is available in Black, White &amp; Green — GSM 95–120, widths 2 ft to 14 ft. UV stabilised for long outdoor life.',
+    netlon:       'Netlon Cover: widths 6–15 ft, 200 m length, 65/75/85 GSM. Great for tomato, chilli, capsicum, watermelon, pomegranate and more.',
+    chili:        'For chilli crops we recommend <strong>Netlon Cover</strong>, <strong>Tomato Thread</strong> and <strong>Agri Wire</strong> for training and protection.',
+    chilli:       'For chilli crops we recommend <strong>Netlon Cover</strong>, <strong>Tomato Thread</strong> and <strong>Agri Wire</strong> for training and protection.',
+    grapes:       'For grapes, our <strong>Agri Wire</strong> (3/6/9 twisted) and <strong>Netlon Cover</strong> are the best combination for trellis and protection.',
+  };
+</script>
 </body>
 </html>

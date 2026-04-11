@@ -152,7 +152,7 @@ ul { list-style: none; }
 }
 .brand-icon {
   width: 46px; height: 46px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--green), var(--blue));
+  /* background: linear-gradient(135deg, var(--green), var(--blue)); */
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }

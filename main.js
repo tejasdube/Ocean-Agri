@@ -146,8 +146,8 @@ $(function () {
     nursery: "🌿 For <strong>Nursery / Greenhouse</strong>:<br>• <strong>Nursery Plant Cover</strong><br>• <strong>Weed Mat</strong> — keeps weeds out<br>• <strong>Low Tunnel Products</strong> (Fiber Stick, Clip, Thread)",
     pump: "💧 <strong>Spray Pumps</strong> — We offer:<br>• <strong>Double Battery Spray Pump</strong> — ideal for large fields<br>• <strong>Two-in-One Spray Pump</strong> — versatile & portable<br>Both are high-performance and easy to use!",
     weed: "🌾 <strong>Weed Mat</strong> available in Black, White and Green variants. Provides excellent weed control and soil temperature regulation.",
-    contact: "📞 You can reach us at:<br><strong>Phone:</strong> +91 98765 43210<br><strong>WhatsApp:</strong> +91 98765 43210<br><strong>Email:</strong> info@oceanagri.in<br>Or visit our <a href='contact.html' style='color:var(--green)'>Contact page</a>.",
-    dealer: "🤝 To find a dealer near you or become an authorized dealer, please visit our <a href='contact.html' style='color:var(--green)'>Contact page</a> or WhatsApp us at +91 98765 43210."
+    contact: "📞 You can reach us at:<br><strong>Phone:</strong> +91 73852 91616<br><strong>WhatsApp:</strong> +91 73852 91616<br><strong>Email:</strong> info@oceanagri.com<br>Or visit our <a href='contact.html' style='color:var(--green)'>Contact page</a>.",
+    dealer: "🤝 To find a dealer near you or become an authorized dealer, please visit our <a href='contact.html' style='color:var(--green)'>Contact page</a> or WhatsApp us at +91 73852 91616."
   };
 
   function detectIntent(msg) {

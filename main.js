@@ -30,19 +30,19 @@ $(function () {
   /* ── Hero Slider (simple fade) ── */
   var slides = [
     {
-      img: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1600&q=80',
-      title: 'Planting Health,<br><em>Growing Happiness</em>',
-      sub: 'Premium agricultural solutions — mulching films, crop covers, netlon, weed mats, spray pumps and more for every farmer.'
+      img: 'Images/slider/slide1.png',
+      title: 'Stronger Roots, Higher Yields with Mulching</em>',
+      sub: 'High-quality mulching films that reduce weed growth, conserve water, and improve crop yield for every farmer.'
     },
     {
-      img: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1600&q=80',
-      title: 'Protect Every<br><em>Crop, Every Season</em>',
-      sub: 'From seedling to harvest — our crop covers and protection nets shield your investment from weather and pests.'
+      img: 'Images/slider/slide2.png',
+      title: 'Protect Your Crops from Insects & Weather</em>',
+      sub: 'High-quality crop covers and net protection designed to block insects, reduce disease, and improve crop growth from sowing to harvest.'
     },
     {
-      img: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1600&q=80',
-      title: 'Smart Tools for<br><em>Modern Farming</em>',
-      sub: 'High-performance spray pumps, agri wire, crop support nets — built for Indian farming conditions.'
+      img: 'Images/slider/slide3.png',
+      title: 'Control Weeds Without Chemicals</em>',
+      sub: 'Durable weed mats block unwanted growth, retain soil moisture, and reduce labor costs—ensuring cleaner fields and healthier crops.'
     }
   ];
   var current = 0;

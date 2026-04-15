@@ -46,7 +46,10 @@
       </li>
       <li class="nav-item"><a class="nav-link active" href="contact.html">Contact Us</a></li>
     </ul>
+   <div style="display:flex; align-items:center; gap:10px;">
     <a class="btn btn-primary nav-cta" href="contact.html">Get Free Quote</a>
+     <a class="btn btn-primary nav-cta" href="OCEAN All Product.pdf" download>Brochure</a>
+</div>
     <button class="hamburger"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -57,6 +60,7 @@
   <a class="mobile-nav-link" href="products.html">Products</a>
   <a class="mobile-nav-link" href="contact.html">Contact Us</a>
   <a class="btn btn-primary" href="contact.html" style="margin-top:20px;display:inline-flex;">Get Free Quote</a>
+    <a class="btn btn-primary" href="OCEAN All Product.pdf" download style="margin-top:10px;display:inline-flex;">Brochure</a>
 </div>
 
 <!-- PAGE HEADER -->
@@ -195,7 +199,7 @@
 </section>
 
 <!-- DEALER SECTION -->
-<section class="section products-bg" id="dealer">
+<section class="section products-bg" id="dealer" style="display: none;">
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;" data-animate>
       <div>
@@ -272,4 +276,149 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="main.js"></script>
 </body>
+</html>
+<script>
+  /* =============================================
+   Ocean Agri – EmailJS Contact Form Handler
+   ============================================= */
+
+/* --------------------------------------------------
+   CONFIGURATION
+   Replace these with your actual EmailJS credentials
+   -------------------------------------------------- */
+const EMAILJS_PUBLIC_KEY  = "0hf5kTCoJUPv4HBgu";       // EmailJS → Account → Public Key
+const EMAILJS_SERVICE_ID  = "service_6210mm8";       // EmailJS → Email Services → Service ID
+const EMAILJS_TEMPLATE_ID = "template_rrxkalx";      // EmailJS → Email Templates → Template ID
+
+/* --------------------------------------------------
+   INITIALISE EmailJS
+   -------------------------------------------------- */
+(function () {
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+})();
+
+/* --------------------------------------------------
+   FORM SUBMISSION HANDLER
+   -------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", function () {
+
+  const form       = document.getElementById("contactForm");
+  const successBox = document.querySelector(".form-success");
+  const submitBtn  = form.querySelector(".form-submit");
+
+  if (!form) return;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!validateForm(form)) return;
+
+    setLoading(submitBtn, true);
+
+    const fname = form.fname.value.trim();
+    const lname = form.lname.value.trim();
+
+    /* --- Template params — exactly matching your EmailJS template variables --- */
+    const templateParams = {
+      name         : `${fname} ${lname}`,                          // {{name}}
+      fname        : fname,                                          // {{fname}}
+      lname        : lname,                                          // {{lname}}
+      email        : form.email.value.trim(),                        // {{email}}
+      phone        : form.phone.value.trim(),                        // {{phone}}
+      inquiry_type : form.inquiry_type.value  || "Not specified",    // {{inquiry_type}}
+      product      : form.product.value       || "Not specified",    // {{product}}
+      message      : form.message.value.trim() || "No message provided", // {{message}}
+      reply_to     : form.email.value.trim(),
+    };
+
+    emailjs
+      .send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+      .then(function () {
+        form.style.display       = "none";
+        successBox.style.display = "flex";
+        form.reset();
+      })
+      .catch(function (error) {
+        console.error("EmailJS error:", error);
+        showError(submitBtn, "Failed to send. Please try WhatsApp or email us directly.");
+      })
+      .finally(function () {
+        setLoading(submitBtn, false);
+      });
+  });
+});
+
+/* --------------------------------------------------
+   HELPERS
+   -------------------------------------------------- */
+
+function validateForm(form) {
+  clearErrors(form);
+  let valid = true;
+
+  ["fname", "lname", "email", "phone"].forEach(function (name) {
+    const field = form[name];
+    if (!field || !field.value.trim()) {
+      markInvalid(field, "This field is required.");
+      valid = false;
+    }
+  });
+
+  if (form.email.value.trim() && !isValidEmail(form.email.value)) {
+    markInvalid(form.email, "Please enter a valid email address.");
+    valid = false;
+  }
+
+  if (form.phone.value.trim() && !isValidPhone(form.phone.value)) {
+    markInvalid(form.phone, "Please enter a valid phone number.");
+    valid = false;
+  }
+
+  return valid;
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPhone(phone) {
+  return /^[\+]?[\d\s\-]{10,15}$/.test(phone.trim());
+}
+
+function markInvalid(field, message) {
+  if (!field) return;
+  field.style.borderColor = "var(--red, #d9534f)";
+  const err = document.createElement("span");
+  err.className = "field-error";
+  err.style.cssText = "color:var(--red,#d9534f);font-size:12px;margin-top:4px;display:block;";
+  err.textContent = message;
+  field.parentNode.appendChild(err);
+}
+
+function clearErrors(form) {
+  form.querySelectorAll(".field-error").forEach(function (el) { el.remove(); });
+  form.querySelectorAll("input, select, textarea").forEach(function (el) {
+    el.style.borderColor = "";
+  });
+}
+
+function setLoading(btn, isLoading) {
+  btn.disabled  = isLoading;
+  btn.innerHTML = isLoading
+    ? "Sending\u2026"
+    : '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Send Inquiry';
+}
+
+function showError(btn, message) {
+  setLoading(btn, false);
+  let errEl = document.querySelector(".form-send-error");
+  if (!errEl) {
+    errEl           = document.createElement("p");
+    errEl.className = "form-send-error";
+    errEl.style.cssText = "color:var(--red,#d9534f);font-size:13px;margin-top:12px;text-align:center;";
+    btn.parentNode.insertBefore(errEl, btn.nextSibling);
+  }
+  errEl.textContent = message;
+}
+</script>
 </html>

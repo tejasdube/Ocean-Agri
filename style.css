@@ -92,13 +92,27 @@
      transition: var(--transition);
    }
    .btn-primary {
-     background: var(--green); color: var(--white);
-     border-color: var(--green);
+    background: linear-gradient(
+      90deg,
+      #71A326 0%,
+      #A4D624 100%
+    );
+     border-color: var(--white);
    }
-   .btn-primary:hover {
+   /* .btn-primary:hover {
      background: var(--green-dark); border-color: var(--green-dark);
      transform: translateY(-2px); box-shadow: 0 12px 30px rgba(46,125,50,0.3);
-   }
+   } */
+
+   .btn-primary:hover {
+    background: linear-gradient(
+      90deg,
+      #5f8f20 0%,
+      #8fbe1f 100%
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(113,163,38,0.35);
+  }
    .btn-outline {
      background: transparent; color: var(--white);
      border-color: var(--white);
@@ -120,10 +134,14 @@
       TOP BAR
       ============================================================ */
    .topbar {
-     background: var(--green-dark);
+    background: linear-gradient(
+      90deg,
+      #71A326 0%,
+      #A4D624 100%
+    );
      padding: 10px 0;
      font-size: 13px;
-     color: rgba(255,255,255,0.85);
+     color: rgba(255, 255, 255, 0.9);
    }
    .topbar .inner {
      display: flex; justify-content: space-between; align-items: center; gap: 16px;
@@ -251,10 +269,16 @@
      display: flex; align-items: center;
    }
    .hero-bg {
-     position: absolute; inset: 0;
-     background: linear-gradient(100deg, rgba(27,94,32,0.96) 0%, rgba(1,87,155,0.82) 60%, rgba(27,94,32,0.6) 100%);
-     z-index: 1;
-   }
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      rgba(113,163,38,0.65) 0%,
+      rgba(164,214,36,0.45) 60%,
+      rgba(113,163,38,0.35) 100%
+    );
+    z-index: 1;
+  }
    .hero-img {
      position: absolute; inset: 0;
      background: url('Images/slider/slide1.png') center/cover no-repeat;
@@ -466,7 +490,12 @@
       WHY CHOOSE US / BANNER
       ============================================================ */
    .why-banner {
-     background: linear-gradient(135deg, var(--green-dark) 0%, var(--blue-dark) 100%);
+     /* background: linear-gradient(135deg, var(--green-dark) 0%, var(--blue-dark) 100%); */
+     background: linear-gradient(
+      90deg,
+      #71A326 0%,
+      #A4D624 100%
+    );
      position: relative; overflow: hidden;
    }
    .why-banner::before {
@@ -541,7 +570,12 @@
       CTA BAND
       ============================================================ */
    .cta-band {
-     background: var(--green);
+     /* background: var(--green); */
+     background: linear-gradient(
+      90deg,
+      #71A326 0%,
+      #A4D624 100%
+    );
      padding: 60px 0; text-align: center;
    }
    .cta-band h2 { color: var(--white); font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 12px; }
